@@ -1,12 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { Footer, Form, Nav } from "../components/Index";
 import {
   AiFillApple,
-  AiFillGoogleCircle,
+  AiFillEye,
+  AiFillEyeInvisible,
   AiOutlineGoogle,
 } from "react-icons/ai";
+import "./styles/login.scss";
+import { NavLink } from "react-router-dom";
 
 const Login = () => {
+  const [showPassword, setShowPassword] = useState(false);
+
   return (
     <main id="login__section">
       <Nav />
@@ -31,8 +36,40 @@ const Login = () => {
               id=""
               placeholder="Email address or username"
             />
-            <input type="password" placeholder="Password" />
+            <div className="password__div">
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Password"
+                className="password"
+              />
+              {showPassword ? (
+                <AiFillEyeInvisible
+                  className="icon"
+                  onClick={() => setShowPassword(!showPassword)}
+                />
+              ) : (
+                <AiFillEye
+                  className="icon"
+                  onClick={() => setShowPassword(!showPassword)}
+                />
+              )}
+            </div>
+            <p>Forgot your password?</p>
+            <button type="submit">Log in</button>
           </form>
+          <div className="bottom__section">
+            <p>
+              Don’t have an account?{" "}
+              <NavLink to="/sign-up" className="cta">
+                Sign up
+              </NavLink>
+            </p>
+            <small>By signing in with an account, you agree to </small>
+            <small>
+              Sciccor's Terms of Service, Privacy Policy and Acceptable Use
+              Policy.
+            </small>
+          </div>
         </article>
       </section>
       <Footer />

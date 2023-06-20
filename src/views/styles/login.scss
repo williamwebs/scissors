@@ -1,0 +1,118 @@
+#login__section {
+  .top__section {
+    text-align: center;
+    small {
+      font-size: 14px;
+      line-height: 40px;
+      color: rgba(92, 111, 127, 1);
+    }
+    .cta {
+      .btn {
+        width: fit-content;
+        margin: 0.2rem;
+        background: var(--blue);
+        color: var(--white);
+        outline: none;
+        border: 1px solid transparent;
+        border-radius: 5px;
+        padding: 0.5rem 2rem;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.25rem;
+        transition: all 0.5s;
+
+        .icon {
+          font-size: 18px;
+        }
+        &:hover {
+          background-color: transparent;
+          color: var(--blue);
+          border-color: var(--blue);
+        }
+      }
+    }
+  }
+  p {
+    text-align: center;
+    margin: 1rem auto;
+    color: rgba(92, 111, 127, 1);
+    font-size: 16px;
+  }
+  .form {
+    background: none;
+    padding: 0;
+    #form {
+      padding: 0;
+      .password__div {
+        position: relative;
+        height: 2.5rem;
+        .password {
+          margin: 0;
+        }
+        .icon {
+          position: absolute;
+          top: 50%;
+          right: 5%;
+          transform: translateY(-50%);
+          cursor: pointer;
+          color: var(--blue);
+          font-size: 18px;
+        }
+      }
+      .retype__password {
+        margin-top: 1rem;
+      }
+      p {
+        text-align: right;
+        font-size: 14px;
+      }
+      button {
+        border-radius: 5px;
+        letter-spacing: normal;
+        transition: all 0.5s;
+        &:hover {
+          background-color: rgba(0, 0, 255, 0.719);
+        }
+      }
+    }
+  }
+  .bottom__section {
+    width: 50%;
+    margin: 0 auto;
+    padding: 0 1rem;
+    p {
+      font-size: 14px;
+      .cta {
+        color: var(--blue);
+        transition: all 0.5s;
+        &:hover {
+          color: var(--dark);
+        }
+      }
+    }
+    small {
+      font-size: 12px;
+      display: block;
+      text-align: center;
+      color: rgba(92, 111, 127, 1);
+      span {
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+.register__section {
+  .form {
+    #form {
+      .left__text {
+        font-size: 12px;
+      }
+    }
+  }
+}
