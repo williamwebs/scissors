@@ -1,0 +1,47 @@
+footer {
+  margin-top: 4rem;
+  padding: 2rem 0;
+  .container {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    .left {
+      flex-basis: 18%;
+      .socials {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 1rem;
+        width: 80%;
+        .icon {
+          font-size: 22px;
+          color: var(--dark);
+          cursor: pointer;
+          transition: all 0.5s;
+          &:hover {
+            color: var(--blue);
+          }
+        }
+      }
+    }
+    .right {
+      flex-basis: 78%;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      .col {
+        padding: 0 1rem;
+        li {
+          list-style: none;
+          cursor: pointer;
+          transition: all 0.5s;
+          font-size: 14px;
+          margin: 0.3rem;
+          &:hover {
+            color: var(--blue);
+          }
+        }
+      }
+    }
+  }
+}
