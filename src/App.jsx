@@ -1,5 +1,15 @@
 import { Route, Routes } from "react-router-dom";
-import { Home, Login, Register } from "./components/Index";
+import {
+  Analytics,
+  CreateLink,
+  Dashboard,
+  Home,
+  Login,
+  MyURLs,
+  QRCode,
+  Register,
+} from "./components/Index";
+import DashboardRoutes from "./views/DashboardRoutes";
 
 function App() {
   return (
@@ -8,6 +18,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/sign-up" element={<Register />} />
+        <Route path="/dashboard/*" element={<DashboardRoutes />} />
       </Routes>
     </>
   );

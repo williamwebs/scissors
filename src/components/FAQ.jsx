@@ -63,7 +63,7 @@ const config = {
 
 const FAQ = () => {
   return (
-    <section className="faq">
+    <section className="faq" id="faq">
       <div className="container">
         <h2>FAQs</h2>
         <div className="faq__container">

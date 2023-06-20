@@ -6,9 +6,9 @@ import { NavLink } from "react-router-dom";
 const Nav = () => {
   return (
     <nav className="nav container">
-      <div className="logo">
+      <NavLink to="/" className="logo">
         <img src={logo} alt="scissors logo" />
-      </div>
+      </NavLink>
       <div className="menu">
         <ul>
           <li>
@@ -18,13 +18,13 @@ const Nav = () => {
             <NavLink to="">Features</NavLink>
           </li>
           <li>
-            <NavLink to="">Pricing</NavLink>
+            <a href="#pricing">Pricing</a>
           </li>
           <li>
             <NavLink to="">Analytics</NavLink>
           </li>
           <li>
-            <NavLink to="">FAQs</NavLink>
+            <a href="#faq">FAQs</a>
           </li>
         </ul>
       </div>

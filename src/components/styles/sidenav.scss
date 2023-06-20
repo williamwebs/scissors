@@ -1,0 +1,55 @@
+#sidenav {
+  background: var(--blue);
+  margin: 0;
+  padding: 1rem;
+  position: sticky;
+  .logo {
+    margin: 1rem 0;
+  }
+  .menus {
+    ul {
+      list-style-type: none;
+      padding: 0;
+      .menu__list {
+        margin: 1rem 0;
+        .menu {
+          text-decoration: none;
+          color: var(--white);
+          font-size: 14px;
+          font-weight: 600;
+          padding: 0.2rem 1rem;
+          border: none;
+          border-radius: 20px;
+          display: block;
+          width: fit-content;
+          transition: all 0.5s;
+          &:hover {
+            background: var(--white);
+            color: var(--blue);
+          }
+        }
+      }
+    }
+  }
+  .bottom {
+    position: absolute;
+    bottom: 1%;
+    right: 3%;
+    width: 100%;
+    text-align: right;
+    button {
+      background-color: transparent;
+      color: var(--white);
+      font-size: 12px;
+      font-weight: 200;
+      letter-spacing: 1px;
+      outline: none;
+      border: none;
+      cursor: pointer;
+      transition: all 0.5s;
+      &:hover {
+        color: rgb(206, 211, 214);
+      }
+    }
+  }
+}

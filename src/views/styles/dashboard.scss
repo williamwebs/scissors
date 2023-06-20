@@ -1,0 +1,11 @@
+#dashboard {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 0.2fr 1fr;
+  gap: 1rem;
+ 
+  .body {
+    margin: 0;
+    padding: 1rem;
+  }
+}
