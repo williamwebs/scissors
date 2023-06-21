@@ -3,13 +3,17 @@ import "./styles/createLink.scss";
 import { FiCopy } from "react-icons/fi";
 import QRCode from "react-qr-code";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const CreateLink = () => {
   const [originalURL, setOriginalURL] = useState("");
   const [shortenedURL, setShortenedURL] = useState("");
-  const [checked, setChecked] = useState(false);
   const [qrCodeValue, setQRCodeValue] = useState("");
-  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [checked, setChecked] = useState(false);
 
+  // link shortner function
   const shortenURL = async (originalURL) => {
     const accessToken = "b91214ec6ea1bc636c8e09bc26a596b9d07dee3f";
     const apiUrl = "https://api-ssl.bitly.com/v4/shorten";
@@ -29,36 +33,49 @@ const CreateLink = () => {
     if (response.ok) {
       const data = await response.json();
       setShortenedURL(data.link);
-      // console.log(data.link); // Return the shortened URL
     } else {
       throw new Error("Failed to shorten URL");
     }
   };
 
+  // useEffect to fetch the QR Code based on the shortened URL
   useEffect(() => {
     setQRCodeValue(shortenedURL);
   }, [shortenedURL]);
 
-  // link shortner fn
+  // handle shorten function on the onSubmit form
   const handleShorten = async (e) => {
     e.preventDefault();
-    // setIsLoading(true);
+    setIsLoading(true);
     try {
       const shortened = await shortenURL(originalURL);
       console.log(shortenedURL);
-      // setIsLoading(false);
+      setIsLoading(false);
     } catch (error) {
       console.error(error);
-      // setIsLoading(false);
+      setIsLoading(false);
     }
   };
 
+  // toastify notify function
+  const notify = () =>
+    toast.success("URL copied to clipboard!", {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+
+  // function to copy url
   const handleCopy = () => {
     navigator.clipboard
       .writeText(shortenedURL)
       .then(() => {
-        // notify();
-        // alert("URL copied to clipboard!");
+        notify();
       })
       .catch((error) => {
         console.error("Failed to copy URL to clipboard:", error);
@@ -96,26 +113,35 @@ const CreateLink = () => {
               Generate a QR Code to share anywhere people can scan it
             </label>
           </div>
-          <button className="cta">Create</button>
+          <button className="cta" disabled={isLoading}>
+            {isLoading ? "Creating..." : "Create"}
+          </button>
         </form>
       </div>
       <div className="display">
         <div className="link">
           <input type="url" value={shortenedURL} readOnly />
           <FiCopy className="icon" onClick={handleCopy} />
+          <ToastContainer
+            position="top-center"
+            autoClose={2000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+          />
         </div>
         <div className="qr">
           {checked && (
             <div className="qr__container">
               {shortenedURL && <QRCode className="icon" value={qrCodeValue} />}
+              <small>scan the bar code</small>
             </div>
           )}
-          {/* {checked &&
-            shortenedURL(
-              <div className="qr__container">
-                <QRCode value={qrCodeValue} />
-              </div>
-            )} */}
         </div>
       </div>
     </main>

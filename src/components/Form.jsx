@@ -6,8 +6,8 @@ import "./styles/form.scss";
 import { RiScissorsCutFill } from "react-icons/ri";
 import { FiCopy } from "react-icons/fi";
 
- import { ToastContainer, toast } from "react-toastify";
- import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Form = () => {
   const [originalURL, setOriginalURL] = useState("");
@@ -45,7 +45,6 @@ const Form = () => {
     if (response.ok) {
       const data = await response.json();
       setShortenedURL(data.link);
-      // console.log(data.link); // Return the shortened URL
     } else {
       throw new Error("Failed to shorten URL");
     }
@@ -65,12 +64,12 @@ const Form = () => {
     }
   };
 
+  // handle copy function
   const handleCopy = () => {
     navigator.clipboard
       .writeText(shortenedURL)
       .then(() => {
         notify();
-        // alert("URL copied to clipboard!");
       })
       .catch((error) => {
         console.error("Failed to copy URL to clipboard:", error);

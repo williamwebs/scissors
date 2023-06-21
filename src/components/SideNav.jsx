@@ -2,6 +2,7 @@ import React from "react";
 import "./styles/sidenav.scss";
 import logo from "../assets/logo-black.png";
 import { NavLink } from "react-router-dom";
+import { GoSignOut } from "react-icons/go";
 
 const SideNav = () => {
   return (
@@ -34,7 +35,9 @@ const SideNav = () => {
         </ul>
       </nav>
       <article className="bottom">
-        <button className="cta">Sign out</button>
+        <button className="cta">
+          <GoSignOut />
+        </button>
       </article>
     </section>
   );
