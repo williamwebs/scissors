@@ -9,8 +9,43 @@ import {
 } from "react-icons/ai";
 import { NavLink } from "react-router-dom";
 
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../config/firebase";
+
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [retypePassword, setRetypePassword] = useState("");
+  const [err, setErr] = useState(false);
+
+  // function to create user account
+  const createUserAccount = (e) => {
+    e.preventDefault();
+    console.log("user created!");
+    console.log(username, email, password, retypePassword);
+
+    if (password != retypePassword) {
+      setErr(true);
+      console.log("password incorrect");
+    } else {
+      console.log("password correct");
+
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          // Signed up
+          const user = userCredential.user;
+          console.log("user created!");
+          console.log(user);
+        })
+        .catch((error) => {
+          const errorMessage = error.message;
+          console.log(errorMessage);
+        });
+      setErr(false);
+    }
+  };
 
   return (
     <main id="login__section" className="register__section">
@@ -29,14 +64,27 @@ const Register = () => {
         </article>
         <p>or</p>
         <article className="form">
-          <form id="form">
-            <input type="text" name="" id="" placeholder="Username" />
-            <input type="email" name="" id="" placeholder="Email" />
+          <form id="form" onSubmit={createUserAccount}>
+            <input
+              type="text"
+              name=""
+              id=""
+              placeholder="Username"
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <input
+              type="email"
+              name=""
+              id=""
+              placeholder="Email"
+              onChange={(e) => setEmail(e.target.value)}
+            />
             <div className="password__div">
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="Password"
                 className="password"
+                onChange={(e) => setPassword(e.target.value)}
               />
               {showPassword ? (
                 <AiFillEyeInvisible
@@ -55,6 +103,7 @@ const Register = () => {
                 type={showPassword ? "text" : "password"}
                 placeholder="Retype Password"
                 className="password"
+                onChange={(e) => setRetypePassword(e.target.value)}
               />
               {showPassword ? (
                 <AiFillEyeInvisible
@@ -68,6 +117,7 @@ const Register = () => {
                 />
               )}
             </div>
+            {err && <span className="error">password does not match.</span>}
             <p className="left__text">
               6 or more characters, one number, one uppercase & one lower case.
             </p>
