@@ -7,10 +7,11 @@ import {
   AiFillEyeInvisible,
   AiOutlineGoogle,
 } from "react-icons/ai";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../config/firebase";
+import { auth, db } from "../config/firebase";
+import { doc, setDoc } from "firebase/firestore";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -20,30 +21,35 @@ const Register = () => {
   const [retypePassword, setRetypePassword] = useState("");
   const [err, setErr] = useState(false);
 
-  // function to create user account
-  const createUserAccount = (e) => {
-    e.preventDefault();
-    console.log("user created!");
-    console.log(username, email, password, retypePassword);
+  // navigate hook to navigate user to dashboard when logged in
+  const navigate = useNavigate();
 
-    if (password != retypePassword) {
+  // function to create user account
+  const createUserAccount = async (e) => {
+    e.preventDefault();
+
+    if (password != retypePassword || password.length < 6) {
       setErr(true);
       console.log("password incorrect");
     } else {
       console.log("password correct");
-
-      createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          // Signed up
-          const user = userCredential.user;
-          console.log("user created!");
-          console.log(user);
-        })
-        .catch((error) => {
-          const errorMessage = error.message;
-          console.log(errorMessage);
-        });
       setErr(false);
+
+      try {
+        // create user
+        const res = await createUserWithEmailAndPassword(auth, email, password);
+
+        // add the user to the db
+        await setDoc(doc(db, "users", res.user.uid), {
+          uid: res.user.uid,
+          username,
+          email,
+        });
+        console.log("user stored!");
+        navigate("/dashboard");
+      } catch (error) {
+        console.log(error.message);
+      }
     }
   };
 
@@ -67,15 +73,15 @@ const Register = () => {
           <form id="form" onSubmit={createUserAccount}>
             <input
               type="text"
-              name=""
-              id=""
+              name="username"
+              id="username"
               placeholder="Username"
               onChange={(e) => setUsername(e.target.value)}
             />
             <input
               type="email"
-              name=""
-              id=""
+              name="email"
+              id="email"
               placeholder="Email"
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -117,7 +123,11 @@ const Register = () => {
                 />
               )}
             </div>
-            {err && <span className="error">password does not match.</span>}
+            {err && (
+              <span className="error">
+                password does not match / password less than 6 characters.
+              </span>
+            )}
             <p className="left__text">
               6 or more characters, one number, one uppercase & one lower case.
             </p>

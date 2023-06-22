@@ -7,10 +7,29 @@ import {
   AiOutlineGoogle,
 } from "react-icons/ai";
 import "./styles/login.scss";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../config/firebase";
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+
+  const navigate = useNavigate();
+
+  // signIn function
+  const handleSignIn = async (e) => {
+    e.preventDefault();
+
+    try {
+      const res = await signInWithEmailAndPassword(auth, email, password);
+      console.log("log in successful!");
+      navigate("/dashboard");
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   return (
     <main id="login__section">
@@ -29,18 +48,20 @@ const Login = () => {
         </article>
         <p>or</p>
         <article className="form">
-          <form id="form">
+          <form id="form" onSubmit={handleSignIn}>
             <input
               type="email"
-              name=""
-              id=""
+              name="email"
+              id="email"
               placeholder="Email address or username"
+              onChange={(e) => setEmail(e.target.value)}
             />
             <div className="password__div">
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="Password"
                 className="password"
+                onChange={(e) => setPassword(e.target.value)}
               />
               {showPassword ? (
                 <AiFillEyeInvisible

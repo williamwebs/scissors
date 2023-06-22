@@ -1,4 +1,5 @@
 import { FirebaseError, initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
 // Your web app's Firebase configuration
@@ -14,4 +15,8 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
-export { app, auth };
+
+// Initialize Cloud Firestore and get a reference to the service
+const db = getFirestore(app);
+
+export { app, auth, db };
