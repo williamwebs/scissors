@@ -1,9 +1,35 @@
+@mixin mobile {
+  @media (max-width: 600px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (max-width: 768px) {
+    @content;
+  }
+}
+
+@mixin laptop {
+  @media (max-width: 1200px) {
+    @content;
+  }
+}
+
 #dashboard {
   height: 100vh;
   display: grid;
   grid-template-columns: 0.2fr 1fr;
   gap: 1rem;
- 
+
+  @include mobile {
+    gap: 0;
+    display: flex;
+    .body {
+      padding: 0;
+    }
+  }
+
   .body {
     margin: 0;
     padding: 1rem;

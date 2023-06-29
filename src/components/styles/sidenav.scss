@@ -1,8 +1,29 @@
+@mixin mobile {
+  @media (max-width: 600px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (max-width: 768px) {
+    @content;
+  }
+}
+
+@mixin laptop {
+  @media (max-width: 1200px) {
+    @content;
+  }
+}
+
 #sidenav {
   background: var(--blue);
   margin: 0;
   padding: 1rem;
   position: sticky;
+  @include mobile {
+    display: none;
+  }
   .logo {
     margin: 1rem 0;
   }

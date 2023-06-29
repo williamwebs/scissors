@@ -1,3 +1,21 @@
+@mixin mobile {
+  @media (max-width: 600px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (max-width: 768px) {
+    @content;
+  }
+}
+
+@mixin laptop {
+  @media (max-width: 1200px) {
+    @content;
+  }
+}
+
 #login__section {
   .top__section {
     text-align: center;
@@ -85,6 +103,10 @@
     width: 50%;
     margin: 0 auto;
     padding: 0 1rem;
+    @include mobile {
+      width: 100%;
+      padding: 0;
+    }
     p {
       font-size: 14px;
       .cta {

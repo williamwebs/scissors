@@ -1,3 +1,21 @@
+@mixin mobile {
+  @media (max-width: 600px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (max-width: 768px) {
+    @content;
+  }
+}
+
+@mixin laptop {
+  @media (max-width: 1200px) {
+    @content;
+  }
+}
+
 .form {
   background: rgba(30, 52, 72, 1);
   padding: 5rem 0;
@@ -23,6 +41,12 @@
     border-radius: 0.8rem;
     background: var(--white);
     padding: 2rem;
+    @include mobile {
+      width: 100%;
+      .row {
+        flex-direction: column;
+      }
+    }
     input,
     select {
       display: block;
@@ -66,6 +90,10 @@
       cursor: pointer;
       transition: all 0.5s;
       letter-spacing: 2px;
+      @include mobile {
+        padding: 1rem;
+        border-radius: 0.1rem;
+      }
 
       // &:hover {
       //   background: transparent;

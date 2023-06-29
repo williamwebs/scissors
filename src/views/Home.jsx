@@ -33,7 +33,7 @@ const Home = () => (
         <button className="learn__cta">Learn more</button>
       </div>
       <div className="image">
-        <img src={heroImg} alt="scissors links" className="" />
+        <img src={heroImg} alt="scissors links" className="heroImgLink" />
         <img src={vector} alt="" className="vector" />
       </div>
       <div className="base">

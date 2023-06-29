@@ -13,6 +13,8 @@ const CreateLink = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [checked, setChecked] = useState(false);
 
+  // const apiUrl = "https://api-ssl.bitly.com/v4/shorten";
+
   // link shortner function
   const shortenURL = async (originalURL) => {
     const accessToken = "b91214ec6ea1bc636c8e09bc26a596b9d07dee3f";

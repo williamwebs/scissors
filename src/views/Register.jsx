@@ -9,7 +9,11 @@ import {
 } from "react-icons/ai";
 import { NavLink, useNavigate } from "react-router-dom";
 
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  GoogleAuthProvider,
+  createUserWithEmailAndPassword,
+  signInWithPopup,
+} from "firebase/auth";
 import { auth, db } from "../config/firebase";
 import { doc, setDoc } from "firebase/firestore";
 
@@ -20,13 +24,46 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [retypePassword, setRetypePassword] = useState("");
   const [err, setErr] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   // navigate hook to navigate user to dashboard when logged in
   const navigate = useNavigate();
 
+  // google sign in provider
+  const provider = new GoogleAuthProvider();
+
+  // sign in with google
+  const googleSignIn = (e) => {
+    e.preventDefault();
+
+    try {
+      signInWithPopup(auth, provider)
+        .then(async (result) => {
+          // This gives you a Google Access Token. You can use it to access the Google API.
+          const credential = GoogleAuthProvider.credentialFromResult(result);
+          const token = credential.accessToken;
+          // The signed-in user info.
+          const user = result.user;
+          console.log(user);
+          // add the user to the db
+          await setDoc(doc(db, "users", user.uid), {
+            uid: user.uid,
+            username: user.displayName,
+            email: user.email,
+          });
+          console.log("user stored!");
+          navigate("/dashboard");
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
+    } catch (error) {}
+  };
+
   // function to create user account
   const createUserAccount = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
     if (password != retypePassword || password.length < 6) {
       setErr(true);
@@ -47,8 +84,10 @@ const Register = () => {
         });
         console.log("user stored!");
         navigate("/dashboard");
+        setIsLoading(false);
       } catch (error) {
         console.log(error.message);
+        setIsLoading(false);
       }
     }
   };
@@ -60,7 +99,7 @@ const Register = () => {
         <article className="top__section">
           <small>Sign up with:</small>
           <aside className="cta">
-            <button className="btn">
+            <button className="btn" onClick={googleSignIn}>
               <AiOutlineGoogle className="icon" /> Google
             </button>
             <button className="btn">
@@ -131,7 +170,9 @@ const Register = () => {
             <p className="left__text">
               6 or more characters, one number, one uppercase & one lower case.
             </p>
-            <button type="submit">Sign up with Email</button>
+            <button type="submit" disabled={isLoading}>
+              {isLoading ? "Creating account..." : "Sign up with Email"}
+            </button>
           </form>
           <div className="bottom__section">
             <p>

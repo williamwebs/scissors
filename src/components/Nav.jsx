@@ -12,7 +12,7 @@ const Nav = () => {
       <div className="menu">
         <ul>
           <li>
-            <NavLink to="">My URLs</NavLink>
+            <NavLink to="/dashboard/my-urls">My URLs</NavLink>
           </li>
           <li>
             <NavLink to="">Features</NavLink>
@@ -21,7 +21,7 @@ const Nav = () => {
             <a href="#pricing">Pricing</a>
           </li>
           <li>
-            <NavLink to="">Analytics</NavLink>
+            <NavLink to="/dashboard/analytics">Analytics</NavLink>
           </li>
           <li>
             <a href="#faq">FAQs</a>

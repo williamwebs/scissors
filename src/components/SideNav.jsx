@@ -3,6 +3,8 @@ import "./styles/sidenav.scss";
 import logo from "../assets/logo-black.png";
 import { NavLink } from "react-router-dom";
 import { GoSignOut } from "react-icons/go";
+import { signOut } from "firebase/auth";
+import { auth } from "../config/firebase";
 
 const SideNav = () => {
   return (
@@ -35,7 +37,7 @@ const SideNav = () => {
         </ul>
       </nav>
       <article className="bottom">
-        <button className="cta">
+        <button className="cta" onClick={() => signOut(auth)}>
           <GoSignOut />
         </button>
       </article>
